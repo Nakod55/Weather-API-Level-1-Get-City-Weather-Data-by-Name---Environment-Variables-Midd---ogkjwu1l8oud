@@ -27,7 +27,17 @@ async function saveDataToDatabase(data) {
 
 // Level 1: Get City Weather Data by Name
 async function getWeatherDataByName(cityName) {
-  
+    const  weatherData = await getDataFromDatabase();
+    let product= weatherData.find(product=> product.city == cityName);
+    return new Promise((resolve,reject)=>{    
+        if(product)
+        {        
+          resolve({city:cityName, ...product.weather })
+        }
+        else{
+           reject(new Error(cityName + " not found"))
+        }
+      })
 }
 
 
